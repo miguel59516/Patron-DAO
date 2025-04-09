@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Usuarios</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Gestión de Usuarios</h1>
+    <form id="usuarioForm">
+      <input type="text" id="dni" placeholder="DNI" required />
+      <input type="text" id="nombre" placeholder="Nombre" required />
+      <input type="email" id="correo" placeholder="Correo" required />
+      <button type="submit">Guardar</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>DNI</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Último Acceso</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="usuarioTabla"></tbody>
+    </table>
+  </div>
+
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Editar Usuario</h2>
+      <input type="text" id="editNombre" />
+      <input type="email" id="editCorreo" />
+      <div class="modal-actions">
+        <button id="confirmEdit">Confirmar</button>
+        <button id="cancelEdit">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
