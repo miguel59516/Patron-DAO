@@ -30,14 +30,28 @@
     </table>
   </div>
 
+  <!-- Modal de edición de usuario -->
   <div id="editModal" class="modal hidden">
     <div class="modal-content">
       <h2>Editar Usuario</h2>
-      <input type="text" id="editNombre" />
-      <input type="email" id="editCorreo" />
+      <input type="text" id="editNombre" placeholder="Nuevo nombre" />
+      <input type="email" id="editCorreo" placeholder="Nuevo correo" />
       <div class="modal-actions">
         <button id="confirmEdit">Confirmar</button>
         <button id="cancelEdit">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para editar fecha y hora -->
+  <div id="fechaModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Editar Fecha de Creación</h2>
+      <input type="date" id="nuevaFecha" />
+      <input type="time" id="nuevaHora" step="60" />
+      <div class="modal-actions">
+        <button id="confirmarFecha">Confirmar</button>
+        <button id="cancelarFecha">Cancelar</button>
       </div>
     </div>
   </div>

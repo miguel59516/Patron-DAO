@@ -5,9 +5,15 @@ const editNombre = document.getElementById('editNombre');
 const editCorreo = document.getElementById('editCorreo');
 const confirmEdit = document.getElementById('confirmEdit');
 const cancelEdit = document.getElementById('cancelEdit');
+const fechaModal = document.getElementById('fechaModal');
+const fechaInput = document.getElementById('nuevaFecha');
+const horaInput = document.getElementById('nuevaHora');
+const confirmarFecha = document.getElementById('confirmarFecha');
+const cancelarFecha = document.getElementById('cancelarFecha');
 
 let usuarios = [];
 let editandoDni = null;
+let editandoFechaDni = null;
 
 function renderTabla() {
   tabla.innerHTML = '';
@@ -23,7 +29,7 @@ function renderTabla() {
       <td>${usuario.correo}</td>
       <td>${usuario.ultimoAcceso.toLocaleString()}</td>
       <td>
-        <button onclick="editarFecha('${usuario.dni}')">Editar Fecha</button>
+        <button onclick="abrirModalFecha('${usuario.dni}')">Editar Fecha</button>
       </td>
       <td>
         <div class="tooltip">
@@ -128,21 +134,45 @@ function eliminarUsuario(dni) {
   }
 }
 
-function editarFecha(dni) {
-  const usuario = usuarios.find(u => u.dni === dni);
-  if (!usuario) return;
-
-  const nuevaFecha = prompt('Ingrese nueva fecha de creación (YYYY-MM-DD HH:MM:SS):');
-  if (nuevaFecha) {
-    const fecha = new Date(nuevaFecha);
-    if (!isNaN(fecha)) {
-      usuario.creado = fecha.getTime();
-      renderTabla();
-    } else {
-      alert('Fecha inválida.');
-    }
-  }
+function abrirModalFecha(dni) {
+  editandoFechaDni = dni;
+  fechaModal.classList.remove('hidden');
+  fechaInput.value = '';
+  horaInput.value = '';
+  fechaInput.type = 'date';
+  horaInput.type = 'time';
+  horaInput.step = 60;
+  horaInput.classList.add('hora-input-animada');
 }
+
+confirmarFecha.addEventListener('click', () => {
+  const usuario = usuarios.find(u => u.dni === editandoFechaDni);
+  if (!usuario) return;
+  const fecha = fechaInput.value;
+  const hora = horaInput.value;
+
+  if (fecha && hora) {
+    const [hh, mm] = hora.split(':');
+    const nuevaFecha = new Date(fecha);
+    nuevaFecha.setHours(parseInt(hh, 10));
+    nuevaFecha.setMinutes(parseInt(mm, 10));
+    nuevaFecha.setSeconds(0);
+
+    if (!isNaN(nuevaFecha.getTime())) {
+      usuario.creado = nuevaFecha.getTime();
+      renderTabla();
+      fechaModal.classList.add('hidden');
+    } else {
+      alert("Fecha u hora inválida.");
+    }
+  } else {
+    alert("Debe ingresar una fecha y hora válidas.");
+  }
+});
+
+cancelarFecha.addEventListener('click', () => {
+  fechaModal.classList.add('hidden');
+});
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
